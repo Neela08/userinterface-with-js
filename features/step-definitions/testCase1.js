@@ -32,9 +32,6 @@ When(
     await card1Page.sendCredentials(email, password, domain);
     await card1Page.selectRandomDropDown();
     await card1Page.clickNextPage();
-    console.debug('#####################################',email)
-    console.debug(password)
-    console.debug(domain)
   }
 );
 Then(/^The '2' card is open$/, async () => {
