@@ -5,7 +5,7 @@ const BaseElement = require("./baseElement");
 class HomePage extends BasePage {
   constructor() {
     super(".start__button");
-    this.nextpage = new BaseElement('a[href="/game.html"]');
+    this.nextpage = new BaseElement(".start__link");
     this.timer = new BaseElement(".timer");
   }
 

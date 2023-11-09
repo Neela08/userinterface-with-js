@@ -7,19 +7,17 @@ class card1Page extends BasePage {
     super(".dropdown__field");
 
     this.TermsAndConditions = new BaseElement(".icon-check");
-    this.domainDropDown = new BaseElement(
-      '//span[@class="icon icon-chevron-down"]'
+    this.domainDropDownButton = new BaseElement(
+      '//div[@class="dropdown__field"]'
     );
-    this.gov = new BaseElement(
-      "/html/body/div/div[1]/div[2]/div[4]/div/div[1]/div/div[3]/form/div[1]/div[3]/div[4]/div/div[2]/div[5]"
-    );
+
     this.nextButton = new BaseElement(
       '//a[contains(@class, "button--secondary")]'
     );
     this.dropdownList = new BaseElement(".dropdown__list");
     this.pass = new BaseElement('//input[contains(@placeholder, "Password")]');
-    this.user=  new BaseElement('//input[contains(@placeholder, "email")]');
-    this.domain=new BaseElement('//input[contains(@placeholder, "Domain")]')
+    this.user = new BaseElement('//input[contains(@placeholder, "email")]');
+    this.domain = new BaseElement('//input[contains(@placeholder, "Domain")]');
   }
 
   open() {
@@ -30,15 +28,16 @@ class card1Page extends BasePage {
     await this.pass.setValue(pass);
     await this.domain.setValue(domain);
     await this.TermsAndConditions.clickElement();
-    await this.domainDropDown.clickElement();
   }
   async clickNextPage() {
     await this.nextButton.clickElement();
   }
+
   async selectRandomDropDown() {
-    const listItems = await this.dropdownList.getElements(
-      '//div[contains(@class, "dropdown__list-item")]'
-    );
+    await this.domainDropDownButton.clickElement();
+    const getdropDownList = await this.dropdownList.getElement();
+    const listItems = await getdropDownList.$$(".dropdown__list-item");
+
     const randomIndex = Math.floor(Math.random() * listItems.length);
     const randomDropDown = listItems[randomIndex];
     await randomDropDown.click();

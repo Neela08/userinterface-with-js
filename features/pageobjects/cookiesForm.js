@@ -5,7 +5,9 @@ const BaseElement = require("./baseElement");
 class CookiesForm extends BasePage {
   constructor() {
     super(".cookies");
-    this.acceptButton = new BaseElement(".button--transparent");
+    this.acceptButton = new BaseElement(
+      '//button[contains(@class, "button--solid") and contains(@class, "button--transparent") and text()="Not really, no"]'
+    );
   }
 
   open() {

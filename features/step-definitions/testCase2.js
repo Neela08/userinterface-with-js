@@ -42,8 +42,8 @@ When(/^I accept cookies$/, async () => {
 });
 
 Then(/^Cookies form is closed$/, async () => {
-  const isClosed = (await cookiesForm.isPageOpen()) === false;
-  expect(isClosed);
+  const isOpened = await cookiesForm.isPageOpen();
+  expect(!isOpened);
 });
 
 Then(/^I can see timer starts from  00:00$/, async () => {

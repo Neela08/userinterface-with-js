@@ -35,8 +35,11 @@ class BaseElement {
     return await $(this.locator);
   }
 
-  async getElements(locator) {
-    return await $$(locator);
+  async getElements() {
+    return await $$(this.locator);
+  }
+  async scrollIntoView() {
+    return await $(this.locator).scrollIntoView();
   }
 }
 module.exports = BaseElement;

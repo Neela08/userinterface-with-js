@@ -14,6 +14,9 @@ class card2Page extends BasePage {
       '//label[@for="interest_unselectall"]//span[@class="checkbox__box"]'
     );
     this.checkboxLabel = new BaseElement("span:last-child");
+    this.checkboxes = new BaseElement(
+      ".avatar-and-interests__interests-list__item .checkbox__box"
+    );
   }
   async upload() {
     await this.uploadPicButton.clickElement();
@@ -25,25 +28,29 @@ class card2Page extends BasePage {
     return super.open("game.html");
   }
 
-  async uploadFileUsingAutoIt() {
-    await execSync("uploadFile.exe", { windowsHide: true });
-  }
   async randomSelection(num) {
     await this.unselectAll.clickElement();
-    const checkboxes = this.getElements(
-      ".avatar-and-interests__interests-list__item .checkbox__box"
-    );
 
-    const filteredCheckboxes = checkboxes.filter((checkbox) => {
-      const labelText = this.checkboxLabel.getText();
-      return labelText !== "Select all" && labelText !== "Unselect all";
-    });
+    const checkboxesElements = await this.checkboxes.getElements();
+
+    const filteredCheckboxes = checkboxesElements.filter(
+      async (checkboxElement) => {
+        const labelText = await checkboxElement
+          .$(this.checkboxLabel.locator)
+          .getText();
+        return labelText !== "Select all" && labelText !== "Unselect all";
+      }
+    );
 
     for (let i = 0; i < num; i++) {
       const randomIndex = Math.floor(Math.random() * filteredCheckboxes.length);
       const checkboxElement = filteredCheckboxes[randomIndex];
       await checkboxElement.click();
     }
+  }
+
+  async uploadFileUsingAutoIt() {
+    await execSync("uploadFile.exe", { windowsHide: true });
   }
 }
 

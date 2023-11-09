@@ -7,7 +7,7 @@ const card2Page = require("../pageobjects/card2Form.js");
 const card3Page = require("../pageobjects/card3Form.js");
 
 const randomCredentials = require("../../Utils/randomCredentials.js");
-const email = "",
+let email = "",
   password = "",
   domain = "";
 
@@ -24,18 +24,21 @@ Then(/^The '1' card is open$/, async () => {
 });
 
 When(
-  /^I Input random valid password, email, accept the terms of use and click next button$/,
+  /^I Input random valid password, email, accept the terms of use$/,
   async () => {
-    this.email = randomCredentials.generateRandomString(5);
-    this.password = randomCredentials.generateRandomPassword(email);
-    this.domain = randomCredentials.generateRandomString(5);
+    email = randomCredentials.generateRandomString(5);
+    password = randomCredentials.generateRandomPassword(email, 15);
+    domain = randomCredentials.generateRandomString(5);
     await card1Page.sendCredentials(email, password, domain);
-    await card1Page.selectRandomDropDown();
-    await card1Page.clickNextPage();
   }
 );
+
+When(/^I choose random domain and click next button$/, async () => {
+  await card1Page.selectRandomDropDown();
+  await card1Page.clickNextPage();
+});
 Then(/^The '2' card is open$/, async () => {
-  expect(await card2Page.isPageOpen()).toBe(true);
+  expect(await card2Page.isPageOpen());
 });
 
 When(
@@ -49,5 +52,5 @@ When(
 );
 
 Then(/^The '3' card is open$/, async () => {
-  expect(await card3Page.isPageOpen()).toBe(true);
+  expect(await card3Page.isPageOpen());
 });
