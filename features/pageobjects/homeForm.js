@@ -1,4 +1,4 @@
-const { $ } = require("@wdio/globals");
+
 const BasePage = require("./baseForm");
 const BaseElement = require("./baseElement");
 

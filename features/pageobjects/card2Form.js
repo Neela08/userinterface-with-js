@@ -1,4 +1,4 @@
-const { $ } = require("@wdio/globals");
+
 const { execSync } = require("child_process");
 const BasePage = require("./baseForm");
 const BaseElement = require("./baseElement");
@@ -18,7 +18,7 @@ class card2Page extends BasePage {
       ".avatar-and-interests__interests-list__item .checkbox__box"
     );
   }
-  async upload() {
+  async clickUploadButton() {
     await this.uploadPicButton.clickElement();
   }
   async clickNextPage() {

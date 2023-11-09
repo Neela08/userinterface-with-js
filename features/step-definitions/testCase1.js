@@ -7,9 +7,9 @@ const card2Page = require("../pageobjects/card2Form.js");
 const card3Page = require("../pageobjects/card3Form.js");
 
 const randomCredentials = require("../../Utils/randomCredentials.js");
-let email = "",
-  password = "",
-  domain = "";
+const emailLength = 5;
+const domainLength = 5;
+const passwordLength = 15;
 
 Given(/^I am on the Home Page$/, async () => {
   await HomePage.open();
@@ -26,30 +26,39 @@ Then(/^The '1' card is open$/, async () => {
 When(
   /^I Input random valid password, email, accept the terms of use$/,
   async () => {
-    email = randomCredentials.generateRandomString(5);
-    password = randomCredentials.generateRandomPassword(email, 15);
-    domain = randomCredentials.generateRandomString(5);
+    const email = randomCredentials.generateRandomString(emailLength);
+    const password = randomCredentials.generateRandomPassword(
+      email,
+      passwordLength
+    );
+    const domain = randomCredentials.generateRandomString(domainLength);
     await card1Page.sendCredentials(email, password, domain);
   }
 );
 
-When(/^I choose random domain and click next button$/, async () => {
+When(/^I choose random domain$/, async () => {
   await card1Page.selectRandomDropDown();
+});
+
+Then(/^I click next button$/, async () => {
   await card1Page.clickNextPage();
 });
 Then(/^The '2' card is open$/, async () => {
   expect(await card2Page.isPageOpen());
 });
 
-When(
-  /^I Choose 3 random interests, upload image, click Next button.$/,
-  async () => {
-    await card2Page.randomSelection(3);
-    await card2Page.upload();
-    await card2Page.uploadFileUsingAutoIt();
-    await card2Page.clickNextPage();
-  }
-);
+When(/^I Choose "([^"]*)" random interests$/, async (args1) => {
+  await card2Page.randomSelection(args1);
+});
+
+When(/^upload image$/, async () => {
+  await card2Page.clickUploadButton();
+  await card2Page.uploadFileUsingAutoIt();
+});
+
+When(/^click Next button$/, async () => {
+  await card2Page.clickNextPage();
+});
 
 Then(/^The '3' card is open$/, async () => {
   expect(await card3Page.isPageOpen());

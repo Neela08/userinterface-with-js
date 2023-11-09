@@ -1,6 +1,6 @@
-const { $ } = require("@wdio/globals");
+
 const BasePage = require("./baseForm");
-const BaseElement = require("./baseElement");
+
 
 class card3Page extends BasePage {
   constructor() {

@@ -1,10 +1,8 @@
 const { Given, When, Then } = require("@wdio/cucumber-framework");
-
 const { expect, $ } = require("@wdio/globals");
 const HelpForm = require("../pageobjects/helpForm");
-const HomePage = require("../pageobjects/homeForm");
 const cookiesForm = require("../pageobjects/cookiesForm");
-
+const HomePage = require("../pageobjects/homeForm.js");
 //test case 2
 
 Then(/^I can see a help form$/, async () => {
